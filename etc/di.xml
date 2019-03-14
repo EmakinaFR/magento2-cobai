@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="Courreges_Export_Block" xsi:type="object">Courreges\ImportExportCMS\Console\Command\ExportBlockCommand</item>
+                <item name="Courreges_Export_Hierarchy" xsi:type="object">Courreges\ImportExportCMS\Console\Command\ExportHierarchyCommand</item>
+                <item name="Courreges_Export_Image" xsi:type="object">Courreges\ImportExportCMS\Console\Command\ExportImageCommand</item>
+                <item name="Courreges_Export_Page" xsi:type="object">Courreges\ImportExportCMS\Console\Command\ExportPageCommand</item>
+                <item name="Courreges_Import_Block" xsi:type="object">Courreges\ImportExportCMS\Console\Command\ImportBlockCommand</item>
+                <item name="Courreges_Import_Hierarchy" xsi:type="object">Courreges\ImportExportCMS\Console\Command\ImportHierarchyCommand</item>
+                <item name="Courreges_Import_Image" xsi:type="object">Courreges\ImportExportCMS\Console\Command\ImportImageCommand</item>
+                <item name="Courreges_Import_Page" xsi:type="object">Courreges\ImportExportCMS\Console\Command\ImportPageCommand</item>
+            </argument>
+        </arguments>
+    </type>
+</config>
