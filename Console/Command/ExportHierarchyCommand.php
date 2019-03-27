@@ -1,6 +1,6 @@
 <?php
 
-namespace Courreges\ImportExportCMS\Console\Command;
+namespace Emakina\CmsImportExport\Console\Command;
 
 use League\Csv\Exception;
 use League\Csv\Writer;
@@ -13,7 +13,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class ExportHierarchyCommand
+ * Class ExportHierarchyCommand.
  */
 class ExportHierarchyCommand extends Command
 {
@@ -47,7 +47,7 @@ class ExportHierarchyCommand extends Command
             'menu_ordered',
             'menu_list_type',
             'top_menu_visibility',
-            'top_menu_excluded'
+            'top_menu_excluded',
         ];
 
     private const PATH = 'var/Export/Hierarchy/';
@@ -70,8 +70,8 @@ class ExportHierarchyCommand extends Command
     /**
      * ExportHierarchyCommand constructor.
      *
-     * @param State $state
-     * @param CollectionFactory $collectionFactory
+     * @param State                 $state
+     * @param CollectionFactory     $collectionFactory
      * @param PageCollectionFactory $pageCollectionFactory
      */
     public function __construct(State $state, CollectionFactory $collectionFactory, PageCollectionFactory $pageCollectionFactory)
@@ -88,17 +88,18 @@ class ExportHierarchyCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('courreges:hierarchy:export')
+        $this->setName('cms:export:hierarchy')
             ->addOption('file', null, InputOption::VALUE_OPTIONAL, 'Name of export file', sprintf('%s.csv', date('Ymd-H:i:s')))
             ->setDescription('Export hierarchy page to csv file');
         parent::configure();
     }
 
     /**
-     * Command to export Hierarchy page to CSV file
+     * Command to export Hierarchy page to CSV file.
      *
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
+     *
      * @throws \Magento\Framework\Exception\LocalizedException
      */
     protected function execute(InputInterface $input, OutputInterface $output): void
@@ -114,10 +115,12 @@ class ExportHierarchyCommand extends Command
     }
 
     /**
-     * Export page hierarchy csv
+     * Export page hierarchy csv.
      *
      * @param string $filename
+     *
      * @return string
+     *
      * @throws Exception
      * @throws \TypeError
      */

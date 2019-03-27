@@ -1,6 +1,6 @@
 <?php
 
-namespace Courreges\ImportExportCMS\Console\Command;
+namespace Emakina\CmsImportExport\Console\Command;
 
 use Magento\Cms\Api\PageRepositoryInterface;
 use Magento\Cms\Model\PageFactory;
@@ -13,7 +13,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class ImportPageCommand
+ * Class ImportPageCommand.
  */
 class ImportPageCommand extends Command
 {
@@ -41,9 +41,9 @@ class ImportPageCommand extends Command
      * ImportBlockCommand constructor.
      *
      * @param PageRepositoryInterface $pageRepository
-     * @param PageFactory $pageFactory
-     * @param CollectionFactory $collectionFactory
-     * @param State $state
+     * @param PageFactory             $pageFactory
+     * @param CollectionFactory       $collectionFactory
+     * @param State                   $state
      */
     public function __construct(PageRepositoryInterface $pageRepository, PageFactory $pageFactory, CollectionFactory $collectionFactory, State $state)
     {
@@ -60,7 +60,7 @@ class ImportPageCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('courreges:page:import')
+        $this->setName('cms:import:page')
             ->setDescription('Import page from csv file')
             ->addArgument('filename', InputArgument::REQUIRED, 'CSV file path')
             ->addOption('force', ['f'], InputOption::VALUE_NONE, 'Replace page if it exists');
@@ -69,10 +69,11 @@ class ImportPageCommand extends Command
     }
 
     /**
-     * Command to import CMS page from CSV file
+     * Command to import CMS page from CSV file.
      *
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
+     *
      * @throws \Magento\Framework\Exception\LocalizedException
      */
     protected function execute(InputInterface $input, OutputInterface $output): void
@@ -90,10 +91,11 @@ class ImportPageCommand extends Command
     }
 
     /**
-     * Import CMS page
+     * Import CMS page.
      *
      * @param string $filePath
-     * @param bool $force
+     * @param bool   $force
+     *
      * @return array
      */
     public function import(string $filePath, bool $force): array

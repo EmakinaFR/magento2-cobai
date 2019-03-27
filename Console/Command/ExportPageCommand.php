@@ -1,6 +1,6 @@
 <?php
 
-namespace Courreges\ImportExportCMS\Console\Command;
+namespace Emakina\CmsImportExport\Console\Command;
 
 use League\Csv\Exception;
 use League\Csv\Writer;
@@ -12,7 +12,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class ExportPageCommand
+ * Class ExportPageCommand.
  */
 class ExportPageCommand extends Command
 {
@@ -53,7 +53,7 @@ class ExportPageCommand extends Command
     /**
      * ExportBlockCommand constructor.
      *
-     * @param State $state
+     * @param State             $state
      * @param CollectionFactory $collectionFactory
      */
     public function __construct(State $state, CollectionFactory $collectionFactory)
@@ -69,17 +69,18 @@ class ExportPageCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('courreges:page:export')
+        $this->setName('cms:export:page')
             ->addOption('file', null, InputOption::VALUE_OPTIONAL, 'Name of export file', sprintf('%s.csv', date('Ymd-H:i:s')))
             ->setDescription('Export page to csv file');
         parent::configure();
     }
 
     /**
-     * Command to export CMS page to CSV file
+     * Command to export CMS page to CSV file.
      *
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
+     *
      * @throws \Magento\Framework\Exception\LocalizedException
      */
     protected function execute(InputInterface $input, OutputInterface $output): void
@@ -95,10 +96,12 @@ class ExportPageCommand extends Command
     }
 
     /**
-     * Export page csv
+     * Export page csv.
      *
      * @param string $filename
+     *
      * @return string
+     *
      * @throws Exception
      * @throws \TypeError
      */

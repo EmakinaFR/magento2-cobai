@@ -3,14 +3,14 @@
     <type name="Magento\Framework\Console\CommandList">
         <arguments>
             <argument name="commands" xsi:type="array">
-                <item name="Courreges_Export_Block" xsi:type="object">Courreges\ImportExportCMS\Console\Command\ExportBlockCommand</item>
-                <item name="Courreges_Export_Hierarchy" xsi:type="object">Courreges\ImportExportCMS\Console\Command\ExportHierarchyCommand</item>
-                <item name="Courreges_Export_Image" xsi:type="object">Courreges\ImportExportCMS\Console\Command\ExportImageCommand</item>
-                <item name="Courreges_Export_Page" xsi:type="object">Courreges\ImportExportCMS\Console\Command\ExportPageCommand</item>
-                <item name="Courreges_Import_Block" xsi:type="object">Courreges\ImportExportCMS\Console\Command\ImportBlockCommand</item>
-                <item name="Courreges_Import_Hierarchy" xsi:type="object">Courreges\ImportExportCMS\Console\Command\ImportHierarchyCommand</item>
-                <item name="Courreges_Import_Image" xsi:type="object">Courreges\ImportExportCMS\Console\Command\ImportImageCommand</item>
-                <item name="Courreges_Import_Page" xsi:type="object">Courreges\ImportExportCMS\Console\Command\ImportPageCommand</item>
+                <item name="Emakina_Cms_Export_Block" xsi:type="object">Emakina\CmsImportExport\Console\Command\ExportBlockCommand</item>
+                <item name="Emakina_Cms_Export_Hierarchy" xsi:type="object">Emakina\CmsImportExport\Console\Command\ExportHierarchyCommand</item>
+                <item name="Emakina_Cms_Export_Image" xsi:type="object">Emakina\CmsImportExport\Console\Command\ExportImageCommand</item>
+                <item name="Emakina_Cms_Export_Page" xsi:type="object">Emakina\CmsImportExport\Console\Command\ExportPageCommand</item>
+                <item name="Emakina_Cms_Import_Block" xsi:type="object">Emakina\CmsImportExport\Console\Command\ImportBlockCommand</item>
+                <item name="Emakina_Cms_Import_Hierarchy" xsi:type="object">Emakina\CmsImportExport\Console\Command\ImportHierarchyCommand</item>
+                <item name="Emakina_Cms_Import_Image" xsi:type="object">Emakina\CmsImportExport\Console\Command\ImportImageCommand</item>
+                <item name="Emakina_Cms_Import_Page" xsi:type="object">Emakina\CmsImportExport\Console\Command\ImportPageCommand</item>
             </argument>
         </arguments>
     </type>

@@ -1,6 +1,6 @@
 <?php
 
-namespace Courreges\ImportExportCMS\Console\Command;
+namespace Emakina\CmsImportExport\Console\Command;
 
 use League\Csv\Exception;
 use League\Csv\Writer;
@@ -14,7 +14,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class ExportImageCommand
+ * Class ExportImageCommand.
  */
 class ExportImageCommand extends Command
 {
@@ -22,7 +22,7 @@ class ExportImageCommand extends Command
         [
             'url',
             'filename',
-            'directory'
+            'directory',
         ];
 
     private const PATH = 'var/Export/Image/';
@@ -56,8 +56,9 @@ class ExportImageCommand extends Command
 
     /**
      * ExportImageCommand constructor.
-     * @param State $state
-     * @param UrlInterface $urlInterface
+     *
+     * @param State                 $state
+     * @param UrlInterface          $urlInterface
      * @param StoreManagerInterface $storeManager
      */
     public function __construct(State $state, UrlInterface $urlInterface, StoreManagerInterface $storeManager)
@@ -74,17 +75,18 @@ class ExportImageCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('courreges:image:export')
+        $this->setName('cms:export:image')
             ->addOption('file', null, InputOption::VALUE_OPTIONAL, 'Name of export file', sprintf('%s.csv', date('Ymd-H:i:s')))
             ->setDescription('Export image to csv file');
         parent::configure();
     }
 
     /**
-     * Command to export Wysiwyg image to CSV file
+     * Command to export Wysiwyg image to CSV file.
      *
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
+     *
      * @throws \Magento\Framework\Exception\LocalizedException
      */
     protected function execute(InputInterface $input, OutputInterface $output): void
@@ -100,10 +102,12 @@ class ExportImageCommand extends Command
     }
 
     /**
-     * Export wysiwyg image
+     * Export wysiwyg image.
      *
      * @param string $filename
+     *
      * @return string
+     *
      * @throws Exception
      * @throws NoSuchEntityException
      * @throws \TypeError
@@ -132,7 +136,7 @@ class ExportImageCommand extends Command
     }
 
     /**
-     * Generate rows
+     * Generate rows.
      *
      * @param $path
      */

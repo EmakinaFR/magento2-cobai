@@ -1,6 +1,6 @@
 <?php
 
-namespace Courreges\ImportExportCMS\Console\Command;
+namespace Emakina\CmsImportExport\Console\Command;
 
 use Magento\Cms\Model\ResourceModel\Page\CollectionFactory as PageCollectionFactory;
 use Magento\Framework\App\State;
@@ -13,7 +13,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class ImportHierarchyCommand
+ * Class ImportHierarchyCommand.
  */
 class ImportHierarchyCommand extends Command
 {
@@ -46,10 +46,10 @@ class ImportHierarchyCommand extends Command
      * ImportHierarchyCommand constructor.
      *
      * @param HierarchyNodeRepositoryInterface $nodeRepository
-     * @param NodeFactory $nodeFactory
-     * @param CollectionFactory $collectionFactory
-     * @param PageCollectionFactory $pageCollectionFactory
-     * @param State $state
+     * @param NodeFactory                      $nodeFactory
+     * @param CollectionFactory                $collectionFactory
+     * @param PageCollectionFactory            $pageCollectionFactory
+     * @param State                            $state
      */
     public function __construct(HierarchyNodeRepositoryInterface $nodeRepository, NodeFactory $nodeFactory, CollectionFactory $collectionFactory, PageCollectionFactory $pageCollectionFactory, State $state)
     {
@@ -67,17 +67,18 @@ class ImportHierarchyCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('courreges:hierarchy:import')
+        $this->setName('cms:import:hierarchy')
             ->setDescription('Import hierarchy page from csv file. Be careful, current hierarchy will be rewritten')
             ->addArgument('filename', InputArgument::REQUIRED, 'CSV file path');
         parent::configure();
     }
 
     /**
-     * Command to import hierarchy page from CSV file
+     * Command to import hierarchy page from CSV file.
      *
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
+     *
      * @throws \Magento\Framework\Exception\LocalizedException
      */
     protected function execute(InputInterface $input, OutputInterface $output): void
@@ -95,9 +96,10 @@ class ImportHierarchyCommand extends Command
     }
 
     /**
-     * Import hierarchy page
+     * Import hierarchy page.
      *
      * @param string $filePath
+     *
      * @return array
      */
     public function import(string $filePath): array
@@ -120,7 +122,6 @@ class ImportHierarchyCommand extends Command
             $csv->setOutputBOM(\League\Csv\Reader::BOM_UTF8);
 
             if (!array_diff(ExportHierarchyCommand::HEADER, $csv->getHeader())) {
-
                 //Import of node line by line
                 $records = $csv->getRecords();
 

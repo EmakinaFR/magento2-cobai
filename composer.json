@@ -1,0 +1,17 @@
+{
+  "name": "emakina/cmsimportexport",
+  "description": "Import and export CMS in Magento 2",
+  "type": "magento2-module",
+  "version": "100.0.1",
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Emakina\\CmsImportExport\\": ""
+    }
+  },
+  "require": {
+    "league/csv": "^9.4"
+  }
+}

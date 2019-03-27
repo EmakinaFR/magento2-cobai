@@ -1,6 +1,6 @@
 <?php
 
-namespace Courreges\ImportExportCMS\Console\Command;
+namespace Emakina\CmsImportExport\Console\Command;
 
 use League\Csv\Exception;
 use League\Csv\Writer;
@@ -12,7 +12,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class ExportBlockCommand
+ * Class ExportBlockCommand.
  */
 class ExportBlockCommand extends Command
 {
@@ -40,7 +40,7 @@ class ExportBlockCommand extends Command
     /**
      * ExportBlockCommand constructor.
      *
-     * @param State $state
+     * @param State             $state
      * @param CollectionFactory $collectionFactory
      */
     public function __construct(State $state, CollectionFactory $collectionFactory)
@@ -56,17 +56,18 @@ class ExportBlockCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('courreges:block:export')
+        $this->setName('cms:export:block')
             ->addOption('file', null, InputOption::VALUE_OPTIONAL, 'Name of export file', sprintf('%s.csv', date('Ymd-H:i:s')))
             ->setDescription('Export block to csv file');
         parent::configure();
     }
 
     /**
-     * Command to export CMS block to CSV file
+     * Command to export CMS block to CSV file.
      *
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
+     *
      * @throws \Magento\Framework\Exception\LocalizedException
      */
     protected function execute(InputInterface $input, OutputInterface $output): void
@@ -82,10 +83,12 @@ class ExportBlockCommand extends Command
     }
 
     /**
-     * Export block csv
+     * Export block csv.
      *
      * @param string $filename
+     *
      * @return string
+     *
      * @throws Exception
      * @throws \TypeError
      */
@@ -104,7 +107,7 @@ class ExportBlockCommand extends Command
                 'identifier' => $block->getIdentifier(),
                 'content' => $block->getContent(),
                 'is_active' => $block->isActive(),
-                'store_id' => implode('|', $block->getStoreId())
+                'store_id' => implode('|', $block->getStoreId()),
             ];
         }
 

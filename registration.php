@@ -1,6 +1,7 @@
 <?php
+
 \Magento\Framework\Component\ComponentRegistrar::register(
     \Magento\Framework\Component\ComponentRegistrar::MODULE,
-    'Courreges_ImportExportCMS',
+    'Emakina_CmsImportExport',
     __DIR__
 );
