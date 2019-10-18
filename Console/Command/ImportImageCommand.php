@@ -1,6 +1,6 @@
 <?php
 
-namespace Courreges\ImportExportCMS\Console\Command;
+namespace Emakina\CmsImportExport\Console\Command;
 
 use Magento\Framework\App\State;
 use Symfony\Component\Console\Command\Command;
@@ -9,7 +9,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class ImportImageCommand
+ * Class ImportImageCommand.
  */
 class ImportImageCommand extends Command
 {
@@ -35,7 +35,7 @@ class ImportImageCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('courreges:image:import')
+        $this->setName('cms:import:image')
             ->setDescription('Import image from csv file')
             ->addArgument('filename', InputArgument::REQUIRED, 'CSV file path');
 
@@ -43,10 +43,11 @@ class ImportImageCommand extends Command
     }
 
     /**
-     * Command to import CMS block from CSV file
+     * Command to import CMS block from CSV file.
      *
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
+     *
      * @throws \Magento\Framework\Exception\LocalizedException
      */
     protected function execute(InputInterface $input, OutputInterface $output): void
@@ -64,9 +65,10 @@ class ImportImageCommand extends Command
     }
 
     /**
-     * Import CMS block
+     * Import CMS block.
      *
      * @param string $filePath
+     *
      * @return array
      */
     public function import(string $filePath): array

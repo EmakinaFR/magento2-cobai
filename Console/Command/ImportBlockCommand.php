@@ -1,6 +1,6 @@
 <?php
 
-namespace Courreges\ImportExportCMS\Console\Command;
+namespace Emakina\CmsImportExport\Console\Command;
 
 use Magento\Cms\Api\BlockRepositoryInterface;
 use Magento\Cms\Model\BlockFactory;
@@ -13,7 +13,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class ImportBlockCommand
+ * Class ImportBlockCommand.
  */
 class ImportBlockCommand extends Command
 {
@@ -41,9 +41,9 @@ class ImportBlockCommand extends Command
      * ImportBlockCommand constructor.
      *
      * @param BlockRepositoryInterface $blockRepository
-     * @param BlockFactory $blockFactory
-     * @param CollectionFactory $collectionFactory
-     * @param State $state
+     * @param BlockFactory             $blockFactory
+     * @param CollectionFactory        $collectionFactory
+     * @param State                    $state
      */
     public function __construct(BlockRepositoryInterface $blockRepository, BlockFactory $blockFactory, CollectionFactory $collectionFactory, State $state)
     {
@@ -60,7 +60,7 @@ class ImportBlockCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('courreges:block:import')
+        $this->setName('cms:import:block')
             ->setDescription('Import block from csv file')
             ->addArgument('filename', InputArgument::REQUIRED, 'CSV file path')
             ->addOption('force', ['f'], InputOption::VALUE_NONE, 'Replace block if it exists');
@@ -69,10 +69,11 @@ class ImportBlockCommand extends Command
     }
 
     /**
-     * Command to import CMS block from CSV file
+     * Command to import CMS block from CSV file.
      *
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
+     *
      * @throws \Magento\Framework\Exception\LocalizedException
      */
     protected function execute(InputInterface $input, OutputInterface $output): void
@@ -90,10 +91,11 @@ class ImportBlockCommand extends Command
     }
 
     /**
-     * Import CMS block
+     * Import CMS block.
      *
      * @param string $filePath
-     * @param bool $force
+     * @param bool   $force
+     *
      * @return array
      */
     public function import(string $filePath, bool $force): array
