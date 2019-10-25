@@ -1,8 +1,8 @@
 <?php
 
-namespace Emakina\CmsImportExport\Service;
+namespace Emakina\Cobai\Service;
 
-use Emakina\CmsImportExport\Constant\ExportConstants;
+use Emakina\Cobai\Constant\ExportConstants;
 use League\Csv\Reader;
 use Magento\Cms\Model\ResourceModel\Page\CollectionFactory as PageCollectionFactory;
 use Magento\VersionsCms\Api\HierarchyNodeRepositoryInterface;

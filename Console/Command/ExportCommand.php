@@ -1,10 +1,10 @@
 <?php
 
-namespace Emakina\CmsImportExport\Console\Command;
+namespace Emakina\Cobai\Console\Command;
 
-use Emakina\CmsImportExport\Constant\ExportConstants;
-use Emakina\CmsImportExport\Logger\Logger;
-use Emakina\CmsImportExport\Service\ExportService;
+use Emakina\Cobai\Constant\ExportConstants;
+use Emakina\Cobai\Logger\Logger;
+use Emakina\Cobai\Service\ExportService;
 use Magento\Framework\App\State;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -51,7 +51,7 @@ class ExportCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('cms:export')
+        $this->setName('cobai:cms:export')
             ->addOption('file', null, InputOption::VALUE_OPTIONAL, 'Name of export file', date('Ymd-H:i:s'))
             ->addOption('directory', null, InputOption::VALUE_OPTIONAL, 'Directory of export file', ExportConstants::BASE_PATH)
             ->addOption('type', null, InputOption::VALUE_OPTIONAL, 'Export type', 'all')

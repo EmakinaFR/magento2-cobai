@@ -1,10 +1,10 @@
 <?php
 
-namespace Emakina\CmsImportExport\Console\Command;
+namespace Emakina\Cobai\Console\Command;
 
-use Emakina\CmsImportExport\Constant\ExportConstants;
-use Emakina\CmsImportExport\Logger\Logger;
-use Emakina\CmsImportExport\Service\ImportService;
+use Emakina\Cobai\Constant\ExportConstants;
+use Emakina\Cobai\Logger\Logger;
+use Emakina\Cobai\Service\ImportService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -43,7 +43,7 @@ class ImportCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('cms:import')
+        $this->setName('cobai:cms:import')
             ->setDescription('Import from csv file')
             ->addArgument('file', InputArgument::REQUIRED, 'CSV file path')
             ->addOption('type', null, InputOption::VALUE_OPTIONAL, 'Export type', 'all')
