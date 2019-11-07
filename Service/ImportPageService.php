@@ -1,27 +1,18 @@
 <?php
 
-namespace Emakina\CmsImportExport\Console\Command;
+namespace Emakina\CmsImportExport\Service;
 
+use Emakina\CmsImportExport\Constant\ExportConstants;
+use League\Csv\Reader;
 use Magento\Cms\Api\PageRepositoryInterface;
 use Magento\Cms\Model\PageFactory;
 use Magento\Cms\Model\ResourceModel\Page\CollectionFactory;
-use Magento\Framework\App\State;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class ImportPageCommand.
+ * Class ImportPageService
  */
-class ImportPageCommand extends Command
+class ImportPageService
 {
-    /**
-     * @var State
-     */
-    private $state;
-
     /**
      * @var PageRepositoryInterface
      */
@@ -33,84 +24,43 @@ class ImportPageCommand extends Command
     private $pageFactory;
 
     /**
-     * @var CollectionFactory
+     * @var \Magento\Cms\Model\ResourceModel\Page\CollectionFactory
      */
     private $collectionFactory;
 
     /**
-     * ImportBlockCommand constructor.
-     *
+     * ImportPageService constructor.
      * @param PageRepositoryInterface $pageRepository
-     * @param PageFactory             $pageFactory
-     * @param CollectionFactory       $collectionFactory
-     * @param State                   $state
+     * @param PageFactory $pageFactory
+     * @param CollectionFactory $collectionFactory
      */
-    public function __construct(PageRepositoryInterface $pageRepository, PageFactory $pageFactory, CollectionFactory $collectionFactory, State $state)
+    public function __construct(PageRepositoryInterface $pageRepository, PageFactory $pageFactory, CollectionFactory $collectionFactory)
     {
-        parent::__construct();
-
-        $this->state = $state;
         $this->pageRepository = $pageRepository;
         $this->pageFactory = $pageFactory;
         $this->collectionFactory = $collectionFactory;
     }
 
     /**
-     * {@inheritdoc}
-     */
-    protected function configure()
-    {
-        $this->setName('cms:import:page')
-            ->setDescription('Import page from csv file')
-            ->addArgument('filename', InputArgument::REQUIRED, 'CSV file path')
-            ->addOption('force', ['f'], InputOption::VALUE_NONE, 'Replace page if it exists');
-
-        parent::configure();
-    }
-
-    /**
-     * Command to import CMS page from CSV file.
+     * Import pages from zip
      *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @throws \Magento\Framework\Exception\LocalizedException
-     */
-    protected function execute(InputInterface $input, OutputInterface $output): void
-    {
-        $this->state->setAreaCode(\Magento\Framework\App\Area::AREA_ADMINHTML);
-        $errors = $this->import($input->getArgument('filename'), $input->getOption('force'));
-
-        if (\count($errors) > 0) {
-            $output->writeln('<error>');
-            $output->writeln($errors);
-            $output->writeln('</error>');
-        } else {
-            $output->writeln('<info>Successful file import</info>');
-        }
-    }
-
-    /**
-     * Import CMS page.
-     *
-     * @param string $filePath
-     * @param bool   $force
-     *
+     * @param string $file
+     * @param bool $force
      * @return array
      */
-    public function import(string $filePath, bool $force): array
+    public function import(string $file, bool $force): array
     {
         $errors = [];
 
         $pageCollection = $this->collectionFactory->create();
 
         try {
-            $csv = \League\Csv\Reader::createFromPath($filePath, 'r');
+            $csv = Reader::createFromPath($file, 'r');
             $csv->setHeaderOffset(0);
             $csv->setDelimiter(';');
-            $csv->setOutputBOM(\League\Csv\Reader::BOM_UTF8);
+            $csv->setOutputBOM(Reader::BOM_UTF8);
 
-            if (!array_diff(ExportBlockCommand::HEADER, $csv->getHeader())) {
+            if (!array_diff(ExportConstants::PAGE_HEADER, $csv->getHeader())) {
                 //Import of page line by line
                 $records = $csv->getRecords();
                 foreach ($records as $i => $record) {
