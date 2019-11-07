@@ -1,30 +1,23 @@
 <?php
 
-namespace Emakina\CmsImportExport\Console\Command;
+namespace Emakina\CmsImportExport\Service;
 
+use Emakina\CmsImportExport\Constant\ExportConstants;
+use League\Csv\Reader;
 use Magento\Cms\Model\ResourceModel\Page\CollectionFactory as PageCollectionFactory;
-use Magento\Framework\App\State;
 use Magento\VersionsCms\Api\HierarchyNodeRepositoryInterface;
+use Magento\VersionsCms\Model\Hierarchy\Node;
 use Magento\VersionsCms\Model\Hierarchy\NodeFactory;
 use Magento\VersionsCms\Model\ResourceModel\Hierarchy\Node\CollectionFactory;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class ImportHierarchyCommand.
+ * Class ImportHierarchyService
  */
-class ImportHierarchyCommand extends Command
+class ImportHierarchyService
 {
     /**
-     * @var State
-     */
-    private $state;
-
-    /**
-     * @var HierarchyNodeRepositoryInterface
-     */
+    * @var HierarchyNodeRepositoryInterface
+    */
     private $nodeRepository;
 
     /**
@@ -43,19 +36,14 @@ class ImportHierarchyCommand extends Command
     private $pageCollectionFactory;
 
     /**
-     * ImportHierarchyCommand constructor.
-     *
+     * ImportHierarchyService constructor.
      * @param HierarchyNodeRepositoryInterface $nodeRepository
-     * @param NodeFactory                      $nodeFactory
-     * @param CollectionFactory                $collectionFactory
-     * @param PageCollectionFactory            $pageCollectionFactory
-     * @param State                            $state
+     * @param NodeFactory $nodeFactory
+     * @param CollectionFactory $collectionFactory
+     * @param PageCollectionFactory $pageCollectionFactory
      */
-    public function __construct(HierarchyNodeRepositoryInterface $nodeRepository, NodeFactory $nodeFactory, CollectionFactory $collectionFactory, PageCollectionFactory $pageCollectionFactory, State $state)
+    public function __construct(HierarchyNodeRepositoryInterface $nodeRepository, NodeFactory $nodeFactory, CollectionFactory $collectionFactory, PageCollectionFactory $pageCollectionFactory)
     {
-        parent::__construct();
-
-        $this->state = $state;
         $this->nodeRepository = $nodeRepository;
         $this->nodeFactory = $nodeFactory;
         $this->collectionFactory = $collectionFactory;
@@ -63,46 +51,13 @@ class ImportHierarchyCommand extends Command
     }
 
     /**
-     * {@inheritdoc}
-     */
-    protected function configure()
-    {
-        $this->setName('cms:import:hierarchy')
-            ->setDescription('Import hierarchy page from csv file. Be careful, current hierarchy will be rewritten')
-            ->addArgument('filename', InputArgument::REQUIRED, 'CSV file path');
-        parent::configure();
-    }
-
-    /**
-     * Command to import hierarchy page from CSV file.
+     * Import hierarchies from csv
      *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @throws \Magento\Framework\Exception\LocalizedException
-     */
-    protected function execute(InputInterface $input, OutputInterface $output): void
-    {
-        $this->state->setAreaCode(\Magento\Framework\App\Area::AREA_ADMINHTML);
-        $errors = $this->import($input->getArgument('filename'));
-
-        if (\count($errors) > 0) {
-            $output->writeln('<error>');
-            $output->writeln($errors);
-            $output->writeln('</error>');
-        } else {
-            $output->writeln('<info>Successful file import</info>');
-        }
-    }
-
-    /**
-     * Import hierarchy page.
-     *
-     * @param string $filePath
-     *
+     * @param string $file
+     * @param bool $force
      * @return array
      */
-    public function import(string $filePath): array
+    public function import(string $file, bool $force): array
     {
         $errors = [];
 
@@ -111,17 +66,18 @@ class ImportHierarchyCommand extends Command
         $pageCollection = $this->pageCollectionFactory->create();
 
         //Delete all hierarchy
+        /** @var Node $node */
         foreach ($collection->getItems() as $node) {
             $node->delete();
         }
 
         try {
-            $csv = \League\Csv\Reader::createFromPath($filePath, 'r');
+            $csv = Reader::createFromPath($file, 'r');
             $csv->setHeaderOffset(0);
             $csv->setDelimiter(';');
-            $csv->setOutputBOM(\League\Csv\Reader::BOM_UTF8);
+            $csv->setOutputBOM(Reader::BOM_UTF8);
 
-            if (!array_diff(ExportHierarchyCommand::HEADER, $csv->getHeader())) {
+            if (!array_diff(ExportConstants::HIERARCHY_HEADER, $csv->getHeader())) {
                 //Import of node line by line
                 $records = $csv->getRecords();
 
