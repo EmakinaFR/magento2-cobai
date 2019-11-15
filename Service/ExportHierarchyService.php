@@ -45,7 +45,7 @@ class ExportHierarchyService
     public function export(string $filename, string $directory): string
     {
         if (!is_dir($directory)) {
-            mkdir($directory);
+            mkdir($directory, 0777, true);
         }
 
         $filename = sprintf('%s.csv', $filename);
