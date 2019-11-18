@@ -19,6 +19,10 @@ class ZipService
      */
     public function createZipFromDir(string $archiveName, string $directory, bool $delete = true): string
     {
+        if (!is_dir($directory)) {
+            throw new Exception(sprintf("Can't create zip, directory %s not found", $directory));
+        }
+
         $files = [];
 
         $zip = new ZipArchive();

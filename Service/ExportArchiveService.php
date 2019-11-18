@@ -67,7 +67,7 @@ class ExportArchiveService
     public function export(string $filename, string $directory): string
     {
         if (!is_dir($directory)) {
-            mkdir($directory);
+            mkdir($directory, 0777, true);
         }
 
         $csvDirectory = $directory . $filename . '/';
