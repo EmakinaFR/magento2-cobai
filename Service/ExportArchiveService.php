@@ -2,6 +2,7 @@
 
 namespace Emakina\CmsImportExport\Service;
 
+use Emakina\CmsImportExport\Constant\ExportConstants;
 use League\Csv\Exception as CsvException;
 
 /**
@@ -71,10 +72,10 @@ class ExportArchiveService
         }
 
         $csvDirectory = $directory . $filename . '/';
-        $this->exportBlockService->export('block', $csvDirectory);
-        $this->exportHierarchyService->export('hierarchy', $csvDirectory);
-        $this->exportPageService->export('page', $csvDirectory);
-        $this->exportImageService->export('image', $csvDirectory);
+        $this->exportBlockService->export(ExportConstants::BLOCK_FILE_NAME, $csvDirectory);
+        $this->exportHierarchyService->export(ExportConstants::HIERARCHY_FILE_NAME, $csvDirectory);
+        $this->exportPageService->export(ExportConstants::PAGE_FILE_NAME, $csvDirectory);
+        $this->exportImageService->export(ExportConstants::IMAGE_FILE_NAME, $csvDirectory);
 
         //Create archive
         $path = $this->zipService->createZipFromDir($directory . $filename, $csvDirectory, true);

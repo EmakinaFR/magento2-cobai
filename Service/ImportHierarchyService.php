@@ -16,8 +16,8 @@ use Magento\VersionsCms\Model\ResourceModel\Hierarchy\Node\CollectionFactory;
 class ImportHierarchyService
 {
     /**
-    * @var HierarchyNodeRepositoryInterface
-    */
+     * @var HierarchyNodeRepositoryInterface
+     */
     private $nodeRepository;
 
     /**
@@ -62,16 +62,15 @@ class ImportHierarchyService
         $errors = [];
 
         $collection = $this->collectionFactory->create();
-
         $pageCollection = $this->pageCollectionFactory->create();
 
-        //Delete all hierarchy
-        /** @var Node $node */
-        foreach ($collection->getItems() as $node) {
-            $node->delete();
-        }
-
         try {
+            //Delete all hierarchy
+            /** @var Node $node */
+            foreach ($collection->getItems() as $node) {
+                $this->nodeRepository->delete($node);
+            }
+
             $csv = Reader::createFromPath($file, 'r');
             $csv->setHeaderOffset(0);
             $csv->setDelimiter(';');
@@ -97,7 +96,16 @@ class ImportHierarchyService
                     }
 
                     if (($record['page_identifier'] && $pageId) || (!$record['page_identifier'] && !$pageId)) {
-                        $parentNodeId = key_exists($record['parent_node_id'], $nodesId) ? $nodesId[$record['parent_node_id']] : null;
+                        $parentNodeId = $nodesId[$record['parent_node_id']] ?? null;
+
+                        //Manage xpath
+                        $xpath = '';
+                        foreach (explode('/', $record['xpath']) as $path) {
+                            if (array_key_exists($path, $nodesId)) {
+                                $xpath .= $nodesId[$path] . '/'; //the current node is added at the end of xpath by magento
+                            }
+                        }
+
                         $node = $this->nodeFactory->create();
                         $node->setScope($record['scope'])
                             ->setScopeId($record['scope_id'])
@@ -108,7 +116,7 @@ class ImportHierarchyService
                             ->setLevel($record['level'])
                             ->setSortOrder($record['sort_order'])
                             ->setRequestUrl($record['request_url'])
-                            ->setXpath($record['xpath'])
+                            ->setXpath($xpath)
                             ->setMetaFirstLast($record['meta_first_last'])
                             ->setMetaNextPrevious($record['meta_next_previous'])
                             ->setMetaChapiter($record['meta_chapter'])

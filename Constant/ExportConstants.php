@@ -11,6 +11,7 @@ class ExportConstants
     public const BASE_PATH = 'var/Export/';
 
     //**************** BLOCK ****************
+    public const BLOCK_FILE_NAME = '2-block';
     public const BLOCK_HEADER =
         [
             'title',
@@ -22,7 +23,12 @@ class ExportConstants
 
     public const BLOCK_PATH = self::BASE_PATH . 'Block/';
 
+    //**************** COMMAND RETURN ****************
+    public const COMMAND_ERROR = 1;
+    public const COMMAND_OK = 0;
+
     //**************** HIERARCHY ****************
+    public const HIERARCHY_FILE_NAME = '4-hierarchy';
     public const HIERARCHY_HEADER =
         [
             'scope',
@@ -60,10 +66,11 @@ class ExportConstants
 
     //**************** IMAGE ****************
     public const IMAGE_DIRECTORY = 'pub/media/wysiwyg/';
-
+    public const IMAGE_FILE_NAME = '1-image';
     public const IMAGE_PATH = self::BASE_PATH . 'Image/';
 
     //**************** PAGE ****************
+    public const PAGE_FILE_NAME = '3-page';
     public const PAGE_HEADER =
         [
             'title',
@@ -87,9 +94,4 @@ class ExportConstants
         ];
 
     public const PAGE_PATH = self::BASE_PATH . 'Page/';
-
-    //**************** COMMAND RETURN ****************
-    public const COMMAND_ERROR = 1;
-
-    public const COMMAND_OK = 0;
 }
