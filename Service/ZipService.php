@@ -84,7 +84,7 @@ class ZipService
             while ($entry = readdir($handle)) {
                 $srcPath = $srcDirectory . $entry;
                 $destPath = $destDirectory . $entry;
-                if ($entry != "." && $entry != ".." && is_file($srcPath)) {
+                if ($entry != "." && $entry != ".." && is_file($srcPath) && strpos($entry, '.') !== 0) {
                     $zip->addFile($srcPath, $destPath);
                     $files[] = $srcPath;
                 } elseif ($entry != "." && $entry != ".." && is_dir($srcPath)) {
