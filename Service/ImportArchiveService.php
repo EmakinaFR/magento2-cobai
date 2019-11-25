@@ -2,6 +2,8 @@
 
 namespace Emakina\CmsImportExport\Service;
 
+use Emakina\CmsImportExport\Constant\ExportConstants;
+
 /**
  * Class ImportArchiveService
  */
@@ -73,23 +75,24 @@ class ImportArchiveService
                 $files = scandir($directory);
                 if (is_array($files)) {
                     $files = array_diff($files, ['.', '..']);
+                    asort($files);
 
                     //Import all files
                     foreach ($files as $file) {
                         $fileWithPath = $directory . $file;
 
                         switch ($file) {
-                            case 'block.csv':
+                            case ExportConstants::BLOCK_FILE_NAME . '.csv':
                                 $errors = array_merge($this->importBlockService->import($fileWithPath, $force), $errors);
                                 break;
-                            case 'image.zip':
+                            case ExportConstants::IMAGE_FILE_NAME . '.zip':
                                 $errors = array_merge($this->importImageService->import($fileWithPath, $force), $errors);
                                 break;
-                            case 'hierarchy.csv':
-                                $errors = array_merge($this->importHierarchyService->import($fileWithPath, $force), $errors);
-                                break;
-                            case 'page.csv':
+                            case ExportConstants::PAGE_FILE_NAME . '.csv':
                                 $errors = array_merge($this->importPageService->import($fileWithPath, $force), $errors);
+                                break;
+                            case ExportConstants::HIERARCHY_FILE_NAME . '.csv':
+                                $errors = array_merge($this->importHierarchyService->import($fileWithPath, $force), $errors);
                                 break;
                             default:
                                 $errors[] = sprintf('Unknown type %s', $file);
