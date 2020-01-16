@@ -1,14 +1,14 @@
 <?php
 
-namespace Emakina\CmsImportExport\Constant;
+namespace Emakina\Cobai\Constant;
 
 class ExportConstants
 {
     //**************** ARCHIVE ****************
-    public const ARCHIVE_PATH = self::BASE_PATH . 'Archive/';
+    public const ARCHIVE_PATH = self::BASE_PATH . 'archive/';
 
     //**************** BASE ****************
-    public const BASE_PATH = 'var/Export/';
+    public const BASE_PATH = 'var/export/';
 
     //**************** BLOCK ****************
     public const BLOCK_FILE_NAME = '2-block';
@@ -21,7 +21,7 @@ class ExportConstants
             'store_id',
         ];
 
-    public const BLOCK_PATH = self::BASE_PATH . 'Block/';
+    public const BLOCK_PATH = self::BASE_PATH . 'block/';
 
     //**************** COMMAND RETURN ****************
     public const COMMAND_ERROR = 1;
@@ -62,12 +62,12 @@ class ExportConstants
             'top_menu_excluded',
         ];
 
-    public const HIERARCHY_PATH = self::BASE_PATH . 'Hierarchy/';
+    public const HIERARCHY_PATH = self::BASE_PATH . 'hierarchy/';
 
     //**************** IMAGE ****************
     public const IMAGE_DIRECTORY = 'pub/media/wysiwyg/';
     public const IMAGE_FILE_NAME = '1-image';
-    public const IMAGE_PATH = self::BASE_PATH . 'Image/';
+    public const IMAGE_PATH = self::BASE_PATH . 'image/';
 
     //**************** PAGE ****************
     public const PAGE_FILE_NAME = '3-page';
@@ -93,5 +93,5 @@ class ExportConstants
             'store_id',
         ];
 
-    public const PAGE_PATH = self::BASE_PATH . 'Page/';
+    public const PAGE_PATH = self::BASE_PATH . 'page/';
 }

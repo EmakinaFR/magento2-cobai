@@ -3,21 +3,21 @@
     <type name="Magento\Framework\Console\CommandList">
         <arguments>
             <argument name="commands" xsi:type="array">
-                <item name="Emakina_Cms_Export" xsi:type="object">Emakina\CmsImportExport\Console\Command\ExportCommand</item>
-                <item name="Emakina_Cms_Import" xsi:type="object">Emakina\CmsImportExport\Console\Command\ImportCommand</item>
+                <item name="Emakina_Cms_Export" xsi:type="object">Emakina\Cobai\Console\Command\ExportCommand</item>
+                <item name="Emakina_Cms_Import" xsi:type="object">Emakina\Cobai\Console\Command\ImportCommand</item>
             </argument>
         </arguments>
     </type>
-    <type name="Emakina\CmsImportExport\Logger\Handler">
+    <type name="Emakina\Cobai\Logger\Handler">
         <arguments>
             <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
         </arguments>
     </type>
-    <type name="Emakina\CmsImportExport\Logger\Logger">
+    <type name="Emakina\Cobai\Logger\Logger">
         <arguments>
-            <argument name="name" xsi:type="string">easyContentLogger</argument>
+            <argument name="name" xsi:type="string">cobaiLogger</argument>
             <argument name="handlers"  xsi:type="array">
-                <item name="system" xsi:type="object">Emakina\CmsImportExport\Logger\Handler</item>
+                <item name="system" xsi:type="object">Emakina\Cobai\Logger\Handler</item>
             </argument>
         </arguments>
     </type>

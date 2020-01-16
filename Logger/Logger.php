@@ -1,6 +1,6 @@
 <?php
 
-namespace Emakina\CmsImportExport\Logger;
+namespace Emakina\Cobai\Logger;
 
 /**
  * Class Logger

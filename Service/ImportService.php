@@ -1,8 +1,8 @@
 <?php
 
-namespace Emakina\CmsImportExport\Service;
+namespace Emakina\Cobai\Service;
 
-use Emakina\CmsImportExport\Logger\Logger;
+use Emakina\Cobai\Logger\Logger;
 use Magento\Framework\App\Area;
 use Magento\Framework\App\State;
 

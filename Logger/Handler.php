@@ -1,6 +1,6 @@
 <?php
 
-namespace Emakina\CmsImportExport\Logger;
+namespace Emakina\Cobai\Logger;
 
 use Magento\Framework\Logger\Handler\Base;
 use Monolog\Logger;
@@ -20,5 +20,5 @@ class Handler extends Base
      * File name
      * @var string
      */
-    protected $fileName = '/var/log/easycontent.log';
+    protected $fileName = '/var/log/cobai.log';
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Emakina\CmsImportExport\Service;
+namespace Emakina\Cobai\Service;
 
 use Exception;
 use ZipArchive;
