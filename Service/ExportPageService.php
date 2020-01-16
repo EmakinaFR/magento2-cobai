@@ -7,6 +7,8 @@ use League\Csv\Exception;
 use League\Csv\Writer;
 use Magento\Cms\Model\Page;
 use Magento\Cms\Model\ResourceModel\Page\CollectionFactory;
+use Magento\Theme\Model\ResourceModel\Theme as ThemeResourceModel;
+use Magento\Theme\Model\ThemeFactory;
 
 /**
  * Class ExportPageService
@@ -19,12 +21,29 @@ class ExportPageService
     private $collectionFactory;
 
     /**
+     * @var ThemeResourceModel
+     */
+    private $themeResourceModel;
+
+    /**
+     * @var ThemeFactory
+     */
+    private $themeFactory;
+
+    /**
      * ExportPageService constructor.
      * @param CollectionFactory $collectionFactory
+     * @param ThemeFactory $themeFactory
+     * @param ThemeResourceModel $themeResourceModel
      */
-    public function __construct(CollectionFactory $collectionFactory)
-    {
+    public function __construct(
+        CollectionFactory $collectionFactory,
+        ThemeFactory $themeFactory,
+        ThemeResourceModel $themeResourceModel
+    ) {
         $this->collectionFactory = $collectionFactory;
+        $this->themeFactory = $themeFactory;
+        $this->themeResourceModel = $themeResourceModel;
     }
 
     /**
@@ -52,6 +71,15 @@ class ExportPageService
         $rows = [ExportConstants::PAGE_HEADER];
         /** @var Page $page */
         foreach ($pages as $page) {
+            //Manage theme
+            $themeCustomId = $page->getCustomTheme();
+            $themeCustom = null;
+            if ($themeCustomId) {
+                $theme = $this->themeFactory->create();
+                $this->themeResourceModel->load($theme, $themeCustomId);
+                $themeCustom = $theme->getCode();
+            }
+
             $rows[] = [
                 'title' => $page->getTitle(),
                 'page_layout' => $page->getPageLayout(),
@@ -63,7 +91,7 @@ class ExportPageService
                 'is_active' => $page->isActive(),
                 'sort_order' => $page->getSortOrder(),
                 'layout_update_xml' => $page->getLayoutUpdateXml(),
-                'custom_theme' => $page->getCustomTheme(),
+                'custom_theme' => $themeCustom,
                 'custom_root_template' => $page->getCustomRootTemplate(),
                 'custom_layout_update_xml' => $page->getCustomLayoutUpdateXml(),
                 'custom_theme_from' => $page->getCustomThemeFrom(),
