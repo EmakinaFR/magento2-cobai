@@ -7,6 +7,8 @@ use League\Csv\Reader;
 use Magento\Cms\Api\PageRepositoryInterface;
 use Magento\Cms\Model\PageFactory;
 use Magento\Cms\Model\ResourceModel\Page\CollectionFactory;
+use Magento\Theme\Model\ResourceModel\Theme as ThemeResourceModel;
+use Magento\Theme\Model\ThemeFactory;
 
 /**
  * Class ImportPageService
@@ -29,16 +31,35 @@ class ImportPageService
     private $collectionFactory;
 
     /**
+     * @var ThemeResourceModel
+     */
+    private $themeResourceModel;
+
+    /**
+     * @var ThemeFactory
+     */
+    private $themeFactory;
+
+    /**
      * ImportPageService constructor.
      * @param PageRepositoryInterface $pageRepository
      * @param PageFactory $pageFactory
      * @param CollectionFactory $collectionFactory
+     * @param ThemeFactory $themeFactory
+     * @param ThemeResourceModel $themeResourceModel
      */
-    public function __construct(PageRepositoryInterface $pageRepository, PageFactory $pageFactory, CollectionFactory $collectionFactory)
-    {
+    public function __construct(
+        PageRepositoryInterface $pageRepository,
+        PageFactory $pageFactory,
+        CollectionFactory $collectionFactory,
+        ThemeFactory $themeFactory,
+        ThemeResourceModel $themeResourceModel
+    ) {
         $this->pageRepository = $pageRepository;
         $this->pageFactory = $pageFactory;
         $this->collectionFactory = $collectionFactory;
+        $this->themeFactory = $themeFactory;
+        $this->themeResourceModel = $themeResourceModel;
     }
 
     /**
@@ -77,6 +98,13 @@ class ImportPageService
                     //Creation of page
                     if (!$page) {
                         $page = $this->pageFactory->create();
+                    }
+
+                    //Manage theme
+                    if ($record['custom_theme']) {
+                        $theme = $this->themeFactory->create();
+                        $this->themeResourceModel->load($theme, $record['custom_theme'], 'code');
+                        $record['custom_theme'] = $theme->getId();
                     }
 
                     $page->setTitle($record['title'])
