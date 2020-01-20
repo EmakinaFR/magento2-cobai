@@ -71,13 +71,13 @@ class ExportPageService
         $rows = [ExportConstants::PAGE_HEADER];
         /** @var Page $page */
         foreach ($pages as $page) {
-            //Manage theme
-            $themeCustomId = $page->getCustomTheme();
-            $themeCustom = null;
-            if ($themeCustomId) {
+            $customThemeId = $page->getCustomTheme();
+
+            $customTheme = null;
+            if ($customThemeId) {
                 $theme = $this->themeFactory->create();
-                $this->themeResourceModel->load($theme, $themeCustomId);
-                $themeCustom = $theme->getCode();
+                $this->themeResourceModel->load($theme, $customThemeId);
+                $customTheme = $theme->getCode();
             }
 
             $rows[] = [
@@ -91,7 +91,7 @@ class ExportPageService
                 'is_active' => $page->isActive(),
                 'sort_order' => $page->getSortOrder(),
                 'layout_update_xml' => $page->getLayoutUpdateXml(),
-                'custom_theme' => $themeCustom,
+                'custom_theme' => $customTheme,
                 'custom_root_template' => $page->getCustomRootTemplate(),
                 'custom_layout_update_xml' => $page->getCustomLayoutUpdateXml(),
                 'custom_theme_from' => $page->getCustomThemeFrom(),
