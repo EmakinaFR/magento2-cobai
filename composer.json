@@ -1,12 +1,16 @@
 {
-  "name": "emakinafr/cobai",
+  "name": "emakinafr/magento2-cobai",
   "type": "magento2-module",
-  "description": "Import and export CMS in Magento 2",
+  "description": "Magento2 module to transfer your CMS data from a platform to another platform.",
   "license": "MIT",
   "authors": [
     {
       "name": "Lauriane Debord",
       "email": "lde@emakina.fr"
+    },
+    {
+      "name": "Emakina.FR - Cluster Magento",
+      "email": "cluster.magento@emakina.fr"
     }
   ],
   "require": {
