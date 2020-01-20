@@ -100,7 +100,6 @@ class ImportPageService
                         $page = $this->pageFactory->create();
                     }
 
-                    //Manage theme
                     if ($record['custom_theme']) {
                         $theme = $this->themeFactory->create();
                         $this->themeResourceModel->load($theme, $record['custom_theme'], 'code');
