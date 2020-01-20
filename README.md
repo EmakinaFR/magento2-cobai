@@ -28,7 +28,7 @@ Because `COBAI` is the abbreviation of `COntent Backup And Import` *- we wanted 
 ### Install
 You can install the module with Composer.
 ```
-$ composer require emakinafr/cobai
+$ composer require emakinafr/magento2-cobai
 $ php bin/magento setup:upgrade
 ```
 
