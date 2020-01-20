@@ -1,6 +1,6 @@
 <h1 align="center">Welcome to COBAI - Magento module 👋</h1>
 <p align="center">
-    <img src="https://img.shields.io/badge/Made_by-Emakina.FR-black.svg?cacheSeconds=2592000" alt="emakina.fr"/>
+    <img src="https://img.shields.io/badge/Made_by-Emakina-black.svg?cacheSeconds=2592000" alt="emakina.fr"/>
     <img src="https://img.shields.io/badge/Open_Source-♥-informational.svg?cacheSeconds=2592000" alt="open source"/>
     <img src="https://img.shields.io/badge/license-MIT-informational.svg?cacheSeconds=2592000" alt="licence MI"/>
     <img src="https://img.shields.io/badge/Magento-2.3.x-important.svg?cacheSeconds=2592000" alt="magento version 2.3.x"/>
