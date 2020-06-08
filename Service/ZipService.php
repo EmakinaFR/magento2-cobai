@@ -2,7 +2,8 @@
 
 namespace Emakina\Cobai\Service;
 
-use Exception;
+use Emakina\Cobai\Exception\ExportException;
+use Emakina\Cobai\Exception\ImportException;
 use ZipArchive;
 
 /**
@@ -15,12 +16,12 @@ class ZipService
      * @param string $directory
      * @param bool $delete
      * @return string
-     * @throws Exception
+     * @throws ExportException
      */
     public function createZipFromDir(string $archiveName, string $directory, bool $delete = true): string
     {
         if (!is_dir($directory)) {
-            throw new Exception(sprintf("Can't create zip, directory %s not found", $directory));
+            throw new ExportException(sprintf("Can't create zip, directory %s not found", $directory));
         }
 
         $files = [];
@@ -48,7 +49,7 @@ class ZipService
      *
      * @param string $archiveFile
      * @return string
-     * @throws Exception
+     * @throws ImportException
      */
     public function extractDirectoryFromZip(string $archiveFile): string
     {
@@ -61,7 +62,7 @@ class ZipService
             $zip->extractTo($directory);
             $zip->close();
         } else {
-            throw new Exception(sprintf("Can't open zip archive %s", $archiveFile));
+            throw new ImportException(sprintf("Can't open zip archive %s", $archiveFile));
         }
 
         return $directory;
@@ -74,7 +75,7 @@ class ZipService
      * @param string $srcDirectory
      * @param string $destDirectory
      * @return array
-     * @throws Exception
+     * @throws ExportException
      */
     private function addDirectoryToZip(ZipArchive &$zip, string $srcDirectory, string $destDirectory = ''): array
     {
@@ -93,7 +94,7 @@ class ZipService
             }
             closedir($handle);
         } else {
-            throw new Exception(sprintf('Cannot open directory %s', $srcDirectory));
+            throw new ExportException(sprintf('Cannot open directory %s', $srcDirectory));
         }
         return $files;
     }
