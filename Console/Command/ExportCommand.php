@@ -54,6 +54,7 @@ class ExportCommand extends Command
         $this->setName('cobai:cms:export')
             ->addOption('file', null, InputOption::VALUE_OPTIONAL, 'Name of export file', date('Ymd-H:i:s'))
             ->addOption('directory', null, InputOption::VALUE_OPTIONAL, 'Directory of export file', ExportConstants::BASE_PATH)
+            ->addOption('identifiers', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'Identifiers in the database', [])
             ->addOption('type', null, InputOption::VALUE_OPTIONAL, 'Export type', 'all')
             ->setDescription('Export block to csv file');
         parent::configure();
@@ -73,8 +74,14 @@ class ExportCommand extends Command
             $directory = $input->getOption('directory');
             /** @var string $type */
             $type = $input->getOption('type');
-            $path = $this->exportService->executeExport($file, $directory, $type);
-            $output->writeln(sprintf('<info>Successful file %s export</info>', $path));
+            /** @var array $identifier */
+            $identifiers = $input->getOption('identifiers');
+            $exportInfo = $this->exportService->executeExport($file, $directory, $type, $identifiers);
+            $output->writeln(sprintf('<info>Successful file %s export</info>', $exportInfo['path']));
+            if (isset($exportInfo['errors'])) {
+                $output->writeln('<info>Errors :</info>');
+                $output->writeln(implode("\n", $exportInfo['errors']));
+            }
         } catch (\Exception $e) {
             $this->logger->error($e->getMessage());
             $output->writeln(sprintf('<error>%s</error>', $e->getMessage()));

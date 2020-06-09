@@ -49,10 +49,11 @@ class ExportArchiveService
         ExportPageService $exportPageService,
         ExportImageService $exportImageService,
         ZipService $zipService
-    ) {
+    )
+    {
         $this->exportBlockService = $exportBlockService;
         $this->exportHierarchyService = $exportHierarchyService;
-        $this->exportPageService= $exportPageService;
+        $this->exportPageService = $exportPageService;
         $this->exportImageService = $exportImageService;
         $this->zipService = $zipService;
     }
@@ -62,11 +63,12 @@ class ExportArchiveService
      *
      * @param string $filename
      * @param string $directory
-     * @return string
-     * @throws CsvException
+     * @return array
+     * @throws \Exception
      */
-    public function export(string $filename, string $directory): string
+    public function export(string $filename, string $directory): array
     {
+        $exportInfo = [];
         if (!is_dir($directory)) {
             mkdir($directory, 0777, true);
         }
@@ -78,11 +80,11 @@ class ExportArchiveService
         $this->exportImageService->export(ExportConstants::IMAGE_FILE_NAME, $csvDirectory);
 
         //Create archive
-        $path = $this->zipService->createZipFromDir($directory . $filename, $csvDirectory, true);
+        $exportInfo['path'] = $this->zipService->createZipFromDir($directory . $filename, $csvDirectory, true);
 
         //Delete directory
         rmdir($csvDirectory);
 
-        return $path;
+        return $exportInfo;
     }
 }
