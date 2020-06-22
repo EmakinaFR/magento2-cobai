@@ -3,6 +3,7 @@
 namespace Emakina\Cobai\Service;
 
 use Emakina\Cobai\Constant\ExportConstants;
+use Emakina\Cobai\Exception\ExportException;
 use League\Csv\Exception;
 use League\Csv\Writer;
 use Magento\Cms\Model\Page;
@@ -52,7 +53,7 @@ class ExportPageService
      * @param string $filename
      * @param string $directory
      * @return string
-     * @throws Exception
+     * @throws ExportException
      */
     public function export(string $filename, string $directory): string
     {
@@ -115,7 +116,7 @@ class ExportPageService
             $writer->setDelimiter(';')->setNewline("\r\n")->insertAll($rows);
             fwrite($file, $writer->getContent());
         } else {
-            throw new \Exception(sprintf('Can not open file %s', $path));
+            throw new ExportException(sprintf('Can not open file %s', $path));
         }
 
         return $path;
