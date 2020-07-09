@@ -6,6 +6,7 @@ use Emakina\Cobai\Constant\ExportConstants;
 use Emakina\Cobai\Logger\Logger;
 use Magento\Framework\App\Area;
 use Magento\Framework\App\State;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Class ExportService
@@ -67,7 +68,8 @@ class ExportService
         ExportPageService $exportPageService,
         ExportArchiveService $exportArchiveService,
         ExportImageService $exportImageService
-    ) {
+    )
+    {
         $this->state = $state;
         $this->logger = $logger;
         $this->exportArchiveService = $exportArchiveService;
@@ -83,33 +85,34 @@ class ExportService
      * @param string $file
      * @param string $directory
      * @param string $type
-     * @return string
+     * @param array $identifiers
+     * @return array
      */
-    public function executeExport(string $file, string $directory, string $type)
+    public function executeExport(string $file, string $directory, string $type, array $identifiers): array
     {
-        $path = '';
+        $exportInfo = [];
         $this->state->emulateAreaCode(
             Area::AREA_ADMINHTML,
-            function () use ($file, $directory, $type, &$path) {
+            function () use ($file, $directory, $type, $identifiers, &$exportInfo) {
                 switch ($type) {
                     case 'block':
-                        $path = $this->exportBlockService->export($file, $directory === ExportConstants::BASE_PATH ? ExportConstants::BLOCK_PATH : $directory);
+                        $exportInfo = $this->exportBlockService->export($file, $directory === ExportConstants::BASE_PATH ? ExportConstants::BLOCK_PATH : $directory, $identifiers);
                         break;
                     case 'image':
-                        $path = $this->exportImageService->export($file, $directory === ExportConstants::BASE_PATH ? ExportConstants::IMAGE_PATH : $directory);
+                        $exportInfo = $this->exportImageService->export($file, $directory === ExportConstants::BASE_PATH ? ExportConstants::IMAGE_PATH : $directory);
                         break;
                     case 'hierarchy':
-                        $path = $this->exportHierarchyService->export($file, $directory === ExportConstants::BASE_PATH ? ExportConstants::HIERARCHY_PATH : $directory);
+                        $exportInfo = $this->exportHierarchyService->export($file, $directory === ExportConstants::BASE_PATH ? ExportConstants::HIERARCHY_PATH : $directory);
                         break;
                     case 'page':
-                        $path = $this->exportPageService->export($file, $directory === ExportConstants::BASE_PATH ? ExportConstants::PAGE_PATH : $directory);
+                        $exportInfo = $this->exportPageService->export($file, $directory === ExportConstants::BASE_PATH ? ExportConstants::PAGE_PATH : $directory, $identifiers);
                         break;
                     default:
-                        $path = $this->exportArchiveService->export($file, $directory === ExportConstants::BASE_PATH ? ExportConstants::ARCHIVE_PATH : $directory);
+                        $exportInfo = $this->exportArchiveService->export($file, $directory === ExportConstants::BASE_PATH ? ExportConstants::ARCHIVE_PATH : $directory);
                 }
             }
         );
 
-        return $path;
+        return $exportInfo;
     }
 }

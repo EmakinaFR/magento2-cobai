@@ -25,21 +25,23 @@ class ExportImageService
 
     /**
      * Export wysiwyg images into a zip
+     *
      * @param string $filename
      * @param string $directory
-     * @return string
+     * @return array
      * @throws \Exception
      */
-    public function export(string $filename, string $directory): string
+    public function export(string $filename, string $directory): array
     {
+        $exportInfo = [];
         if (!is_dir($directory)) {
             mkdir($directory, 0777, true);
         }
         $archivePath = $directory . $filename;
 
         //Create archive
-        $path = $this->zipService->createZipFromDir($archivePath, ExportConstants::IMAGE_DIRECTORY, false);
+        $exportInfo['path'] = $this->zipService->createZipFromDir($archivePath, ExportConstants::IMAGE_DIRECTORY, false);
 
-        return $path;
+        return $exportInfo;
     }
 }

@@ -39,15 +39,15 @@ class ExportHierarchyService
      *
      * @param string $filename
      * @param string $directory
-     * @return string
-     * @throws Exception
+     * @return array
+     * @throws \Exception
      */
-    public function export(string $filename, string $directory): string
+    public function export(string $filename, string $directory): array
     {
         if (!is_dir($directory)) {
             mkdir($directory, 0777, true);
         }
-
+        $exportInfo = [];
         $filename = sprintf('%s.csv', $filename);
 
         $nodeCollection = $this->collectionFactory->create();
@@ -102,6 +102,7 @@ class ExportHierarchyService
         //Create the file and write in it
         $path = $directory . $filename;
         $file = fopen($path, 'w+');
+        $exportInfo['path'] = $path;
 
         $writer = Writer::createFromFileObject(new \SplTempFileObject());
         if ($writer instanceof Writer && $file) {
@@ -111,6 +112,6 @@ class ExportHierarchyService
             throw new \Exception(sprintf('Can not open file %s', $path));
         }
 
-        return $path;
+        return $exportInfo;
     }
 }

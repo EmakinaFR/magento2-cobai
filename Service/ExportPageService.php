@@ -10,6 +10,7 @@ use Magento\Cms\Model\Page;
 use Magento\Cms\Model\ResourceModel\Page\CollectionFactory;
 use Magento\Theme\Model\ResourceModel\Theme as ThemeResourceModel;
 use Magento\Theme\Model\ThemeFactory;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Class ExportPageService
@@ -41,7 +42,8 @@ class ExportPageService
         CollectionFactory $collectionFactory,
         ThemeFactory $themeFactory,
         ThemeResourceModel $themeResourceModel
-    ) {
+    )
+    {
         $this->collectionFactory = $collectionFactory;
         $this->themeFactory = $themeFactory;
         $this->themeResourceModel = $themeResourceModel;
@@ -52,11 +54,13 @@ class ExportPageService
      *
      * @param string $filename
      * @param string $directory
-     * @return string
+     * @param array $identifiers
+     * @return array
      * @throws ExportException
      */
-    public function export(string $filename, string $directory): string
+    public function export(string $filename, string $directory, array $identifiers = []): array
     {
+        $exportInfo = [];
         if (!is_dir($directory)) {
             mkdir($directory, 0777, true);
         }
@@ -65,8 +69,28 @@ class ExportPageService
 
         $pageCollection = $this->collectionFactory->create();
 
-        //Get all cms pages
-        $pages = $pageCollection->getItems();
+
+        if (empty($identifiers)) {
+            //Get all cms pages
+            $pages = $pageCollection->getItems();
+        } else {
+            $pages = $pageCollection->addFieldToFilter('identifier', $identifiers);
+
+            $identifiers = $pages->getColumnValues('identifier');
+
+            if (!$pages->count()) {
+                throw new \InvalidArgumentException('No matching identifier(s)');
+            }
+
+            foreach ($identifiers as $identifier) {
+                if (!in_array($identifier, $identifiers)) {
+                    $exportInfo['errors'][] = sprintf('<comment>%s is missing</comment>', $identifier);
+                }
+            }
+
+
+        }
+
 
         //Create the content of csv file
         $rows = [ExportConstants::PAGE_HEADER];
@@ -110,6 +134,8 @@ class ExportPageService
         //Create the file and write in it
         $path = $directory . $filename;
         $file = fopen($path, 'w+');
+        $exportInfo['path'] = $path;
+
 
         $writer = Writer::createFromFileObject(new \SplTempFileObject());
         if ($writer instanceof Writer && $file) {
@@ -119,6 +145,6 @@ class ExportPageService
             throw new ExportException(sprintf('Can not open file %s', $path));
         }
 
-        return $path;
+        return $exportInfo;
     }
 }
